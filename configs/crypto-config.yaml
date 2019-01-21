@@ -1,0 +1,33 @@
+OrdererOrgs:
+- Name: OrdererOrg
+  Domain: orderer-org
+  CommonName: orderer-org
+  Specs:
+  - Hostname: orderer0
+    CommonName: "{{.Hostname}}"
+PeerOrgs:
+- Name: MPBroker
+  Domain: mp-broker-org
+  Specs:
+  - Hostname: mp-broker-peer
+    CommonName: "{{.Hostname}}"
+- Name: CustomerA
+  Domain: customer-a-org
+  Specs:
+  - Hostname: customer-a-peer
+    CommonName: "{{.Hostname}}"
+- Name: CustomerB
+  Domain: customer-b-org
+  Specs:
+  - Hostname: customer-b-peer
+    CommonName: "{{.Hostname}}"
+- Name: CustomerC
+  Domain: customer-c-org
+  Specs:
+  - Hostname: customer-c-peer
+    CommonName: "{{.Hostname}}"
+- Name: CustomerD
+  Domain: customer-d-org
+  Specs:
+  - Hostname: customer-d-peer
+    CommonName: "{{.Hostname}}"

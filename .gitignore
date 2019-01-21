@@ -1,0 +1,6 @@
+*.block
+*.tx
+*.pem
+*.crt
+*.key
+*_sk
