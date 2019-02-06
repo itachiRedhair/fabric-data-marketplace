@@ -2,39 +2,39 @@ Organizations:
   - &OrdererOrg
     Name: OrdererOrg
     ID: OrdererMSP
-    MSPDir: ../cli/peers/ordererOrganizations/orderer-org/msp
+    MSPDir: ../cli/organisations/ordererOrganizations/orderer-org/msp
   - &MPBroker
     Name: MPBroker
     ID: MPBroker
-    MSPDir: ../cli/peers/peerOrganizations/mp-broker-org/msp
+    MSPDir: ../cli/organisations/peerOrganizations/mp-broker-org/msp
     AnchorPeers:
       - Host: mp-broker-peer
         Port: 7051
   - &CustomerA
     Name: CustomerA
     ID: CustomerA
-    MSPDir: ../cli/peers/peerOrganizations/customer-a-org/msp
+    MSPDir: ../cli/organisations/peerOrganizations/customer-a-org/msp
     AnchorPeers:
       - Host: customer-a-peer
         Port: 7051
   - &CustomerB
     Name: CustomerB
     ID: CustomerB
-    MSPDir: ../cli/peers/peerOrganizations/customer-b-org/msp
+    MSPDir: ../cli/organisations/peerOrganizations/customer-b-org/msp
     AnchorPeers:
       - Host: customer-b-peer
         Port: 7051
   - &CustomerC
     Name: CustomerC
     ID: CustomerC
-    MSPDir: ../cli/peers/peerOrganizations/customer-c-org/msp
+    MSPDir: ../cli/organisations/peerOrganizations/customer-c-org/msp
     AnchorPeers:
       - Host: customer-c-peer
         Port: 7051
   - &CustomerD
     Name: CustomerD
     ID: CustomerD
-    MSPDir: ../cli/peers/peerOrganizations/customer-d-org/msp
+    MSPDir: ../cli/organisations/peerOrganizations/customer-d-org/msp
     AnchorPeers:
       - Host: customer-d-peer
         Port: 7051

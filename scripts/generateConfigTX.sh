@@ -2,8 +2,12 @@
 
 CHANNEL_NAME="market"
 PROJPATH=$(pwd)
-CLIPATH=$PROJPATH/cli/peers
+CLIPATH=$PROJPATH/cli
 TOOLS=$PROJPATH/tools
+ORGANISATIONS_PATH=$CLIPATH/organisations
+ANCHOR_TRANSACTIONS_PATH=$CLIPATH/anchorTransactions
+CHANNEL_TRANSACTIONS_PATH=$CLIPATH/channelTransactions
+GENESIS_BLOCK_TRANSACTIONS_PATH=$CLIPATH/genesisBlockTransaction
 
 export FABRIC_CFG_PATH=./configs
 
@@ -11,41 +15,41 @@ echo
 echo "##########################################################"
 echo "#########  Generating Orderer Genesis block ##############"
 echo "##########################################################"
-$TOOLS/configtxgen -profile FiveOrgsGenesis -outputBlock $CLIPATH/genesis.block
+$TOOLS/configtxgen -profile FiveOrgsGenesis -outputBlock $GENESIS_BLOCK_TRANSACTIONS_PATH/genesis.block
 
 echo
 echo "#################################################################"
 echo "### Generating channel configuration transaction 'channel.tx' ###"
 echo "#################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputCreateChannelTx $CLIPATH/channel.tx -channelID $CHANNEL_NAME
-cp $CLIPATH/channel.tx $PROJPATH/web
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputCreateChannelTx $CHANNEL_TRANSACTIONS_PATH/channel.tx -channelID $CHANNEL_NAME
+cp $CHANNEL_TRANSACTIONS_PATH/channel.tx $PROJPATH/web/channelTransactions
 
 echo
 echo "#################################################################"
 echo "####### Generating anchor peer update for MPBroker ##########"
 echo "#################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $CLIPATH/MPBrokerAnchors.tx -channelID $CHANNEL_NAME -asOrg MPBroker
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $ANCHOR_TRANSACTIONS_PATH/MPBrokerAnchors.tx -channelID $CHANNEL_NAME -asOrg MPBroker
 
 echo
 echo "#################################################################"
 echo "####### Generating anchor peer update for CustomerA ##########"
 echo "#################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $CLIPATH/CustomerAAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerA
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $ANCHOR_TRANSACTIONS_PATH/CustomerAAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerA
 
 echo
 echo "#################################################################"
 echo "#######    Generating anchor peer update for CustomerB   ##########"
 echo "#################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $CLIPATH/CustomerBAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerB
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $ANCHOR_TRANSACTIONS_PATH/CustomerBAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerB
 
 echo
 echo "##################################################################"
 echo "####### Generating anchor peer update for CustomerC ##########"
 echo "##################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $CLIPATH/CustomerCAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerC
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $ANCHOR_TRANSACTIONS_PATH/CustomerCAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerC
 
 echo
 echo "##################################################################"
 echo "#######   Generating anchor peer update for CustomerD   ##########"
 echo "##################################################################"
-$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $CLIPATH/CustomerDAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerD
+$TOOLS/configtxgen -profile FiveOrgsChannel -outputAnchorPeersUpdate $ANCHOR_TRANSACTIONS_PATH/CustomerDAnchors.tx -channelID $CHANNEL_NAME -asOrg CustomerD

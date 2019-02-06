@@ -1,5 +1,5 @@
 # clean all the files in gitignore
-sh clean.sh
+sh ./scripts/clean.sh
 
 #!/bin/sh
 set -e
@@ -13,14 +13,26 @@ TOOLS=$PROJPATH/tools
 CONFIGS=$PROJPATH/configs
 PEERS=$PROJPATH/peers
 ORDERER=$PROJPATH/orderer
-CLIPATH=$PROJPATH/cli/peers
+CLIPATH=$PROJPATH/cli
+ORGANISATIONS_PATH=$CLIPATH/organisations
+ANCHOR_TRANSACTIONS_PATH=$CLIPATH/anchorTransactions
+CHANNEL_TRANSACTIONS_PATH=$CLIPATH/channelTransactions
+GENESIS_BLOCK_TRANSACTIONS_PATH=$CLIPATH/genesisBlockTransaction
 CA=$PROJPATH/ca
-CLIPATH_ORDERERS=$CLIPATH/ordererOrganizations
-CLIPATH_PEER_ORGANIZATIONS=$CLIPATH/peerOrganizations
+CLIPATH_ORDERERS=$ORGANISATIONS_PATH/ordererOrganizations
+CLIPATH_PEER_ORGANIZATIONS=$ORGANISATIONS_PATH/peerOrganizations
+
+mkdir $CLIPATH
+mkdir $ORGANISATIONS_PATH
+mkdir $ANCHOR_TRANSACTIONS_PATH
+mkdir $CHANNEL_TRANSACTIONS_PATH
+mkdir $GENESIS_BLOCK_TRANSACTIONS_PATH
+mkdir $PROJPATH/web
+mkdir $PROJPATH/web/channelTransactions
 
 
-rm -rf $CLIPATH
-$TOOLS/cryptogen generate --config=$CONFIGS/crypto-config.yaml --output=$CLIPATH
+# rm -rf $CLIPATH
+$TOOLS/cryptogen generate --config=$CONFIGS/crypto-config.yaml --output=$ORGANISATIONS_PATH
 
 sh ./scripts/generateConfigTX.sh
 
@@ -35,13 +47,13 @@ cp -r $CLIPATH_PEER_ORGANIZATIONS/customer-b-org/peers/customer-b-peer/{msp,tls}
 cp -r $CLIPATH_PEER_ORGANIZATIONS/customer-c-org/peers/customer-c-peer/{msp,tls} $PEERS/CustomerCPeer/crypto
 cp -r $CLIPATH_PEER_ORGANIZATIONS/customer-d-org/peers/customer-d-peer/{msp,tls} $PEERS/CustomerDPeer/crypto
 
-cp $CLIPATH/genesis.block $ORDERER
+cp $GENESIS_BLOCK_TRANSACTIONS_PATH/genesis.block $ORDERER
 
 CUSTOMERA_CA_PATH=$PROJPATH/ca/customerACA
 CUSTOMERB_CA_PATH=$PROJPATH/ca/customerBCA
 CUSTOMERC_CA_PATH=$PROJPATH/ca/customerCCA
 CUSTOMERD_CA_PATH=$PROJPATH/ca/customerDCA
-MARKET_PLACE_BROKER_CA_PATH=$PROJPATH/customerDCA
+MARKET_PLACE_BROKER_CA_PATH=$PROJPATH/ca/mpBrokerCA
 
 
 rm -rf {$CUSTOMERA_CA_PATH,$CUSTOMERB_CA_PATH,$CUSTOMERC_CA_PATH,$CUSTOMERD_CA_PATH,$MARKET_PLACE_BROKER_CA_PATH}/{ca,tls}
