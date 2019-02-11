@@ -3,37 +3,37 @@ Organizations:
     Name: OrdererOrg
     ID: OrdererMSP
     MSPDir: ../cli/organisations/ordererOrganizations/orderer-org/msp
-  - &MPBroker
-    Name: MPBroker
-    ID: MPBroker
+  - &MPBrokerOrg
+    Name: MPBrokerOrg
+    ID: MPBrokerMSP
     MSPDir: ../cli/organisations/peerOrganizations/mp-broker-org/msp
     AnchorPeers:
       - Host: mp-broker-peer
         Port: 7051
-  - &CustomerA
-    Name: CustomerA
-    ID: CustomerA
+  - &CustomerAOrg
+    Name: CustomerAOrg
+    ID: CustomerAMSP
     MSPDir: ../cli/organisations/peerOrganizations/customer-a-org/msp
     AnchorPeers:
       - Host: customer-a-peer
         Port: 7051
-  - &CustomerB
-    Name: CustomerB
-    ID: CustomerB
+  - &CustomerBOrg
+    Name: CustomerBOrg
+    ID: CustomerBMSP
     MSPDir: ../cli/organisations/peerOrganizations/customer-b-org/msp
     AnchorPeers:
       - Host: customer-b-peer
         Port: 7051
-  - &CustomerC
-    Name: CustomerC
-    ID: CustomerC
+  - &CustomerCOrg
+    Name: CustomerCOrg
+    ID: CustomerCMSP
     MSPDir: ../cli/organisations/peerOrganizations/customer-c-org/msp
     AnchorPeers:
       - Host: customer-c-peer
         Port: 7051
-  - &CustomerD
-    Name: CustomerD
-    ID: CustomerD
+  - &CustomerDOrg
+    Name: CustomerDOrg
+    ID: CustomerDMSP
     MSPDir: ../cli/organisations/peerOrganizations/customer-d-org/msp
     AnchorPeers:
       - Host: customer-d-peer
@@ -62,18 +62,18 @@ Profiles:
     Consortiums:
       MarketPlaceConsortium:
         Organizations:
-          - *MPBroker
-          - *CustomerA
-          - *CustomerB
-          - *CustomerC
-          - *CustomerD
+          - *MPBrokerOrg
+          - *CustomerAOrg
+          - *CustomerBOrg
+          - *CustomerCOrg
+          - *CustomerDOrg
   FiveOrgsChannel:
     Consortium: MarketPlaceConsortium
     Application:
       <<: *ApplicationDefaults
       Organizations:
-        - *MPBroker
-        - *CustomerA
-        - *CustomerB
-        - *CustomerC
-        - *CustomerD
+        - *MPBrokerOrg
+        - *CustomerAOrg
+        - *CustomerBOrg
+        - *CustomerCOrg
+        - *CustomerDOrg

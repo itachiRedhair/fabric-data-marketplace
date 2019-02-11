@@ -1,0 +1,152 @@
+version: '2'
+
+services:
+  customer-a-ca:
+    container_name: customer-a-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: customer-a-ca
+    ports:
+    - 7054:7054
+
+  customer-b-ca:
+    container_name: customer-b-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: customer-b-ca
+    ports:
+    - 7054:7054
+
+  customer-c-ca:
+    container_name: customer-c-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: customer-c-ca
+    ports:
+    - 7054:7054
+
+  customer-d-ca:
+    container_name: customer-d-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: customer-d-ca
+    ports:
+    - 7054:7054
+
+  mpb-broker-ca:
+    container_name: mpb-broker-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: mpb-broker-ca
+    ports:
+    - 7054:7054
+
+
+  orderer0:
+    container_name: orderer0
+    image: orderer
+    environment:
+    - ORDERER_GENERAL_LOGLEVEL=debug
+    - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+    - ORDERER_GENERAL_GENESISMETHOD=file
+    - ORDERER_GENERAL_GENESISFILE=/orderer/crypto/genesis.block
+    - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+    - ORDERER_GENERAL_LOCALMSPDIR=/orderer/crypto/msp
+    - ORDERER_GENERAL_TLS_ENABLED=true
+    - ORDERER_GENERAL_TLS_PRIVATEKEY=/orderer/crypto/tls/server.key
+    - ORDERER_GENERAL_TLS_CERTIFICATE=/orderer/crypto/tls/server.crt
+    - ORDERER_GENERAL_TLS_ROOTCAS=[/orderer/crypto/tls/ca.crt]
+    working_dir: /orderer
+    command: orderer
+    ports:
+    - 7050:7050
+
+  customer-a-peer:
+    container_name: customer-a-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: customer-a-peer
+    environment:
+    - CORE_PEER_ID=customer-a-peer
+    - CORE_PEER_ADDRESS=customer-a-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-a-peer:7051
+    - CORE_PEER_LOCALMSPID=CustomerAMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  customer-b-peer:
+    container_name: customer-b-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: customer-b-peer
+    environment:
+    - CORE_PEER_ID=customer-b-peer
+    - CORE_PEER_ADDRESS=customer-b-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-b-peer:7051
+    - CORE_PEER_LOCALMSPID=CustomerBMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  customer-c-peer:
+    container_name: customer-c-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: customer-c-peer
+    environment:
+    - CORE_PEER_ID=customer-c-peer
+    - CORE_PEER_ADDRESS=customer-c-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-c-peer:7051
+    - CORE_PEER_LOCALMSPID=CustomerCMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  customer-d-peer:
+    container_name: customer-d-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: customer-d-peer
+    environment:
+    - CORE_PEER_ID=customer-d-peer
+    - CORE_PEER_ADDRESS=customer-d-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-d-peer:7051
+    - CORE_PEER_LOCALMSPID=CustomerDMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  mp-broker-peer:
+    container_name: mp-broker-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: mp-broker-peer
+    environment:
+    - CORE_PEER_ID=mp-broker-peer
+    - CORE_PEER_ADDRESS=mp-broker-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=mp-broker-peer:7051
+    - CORE_PEER_LOCALMSPID=MPBrokerMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
