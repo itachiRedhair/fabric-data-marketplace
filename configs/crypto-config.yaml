@@ -6,22 +6,22 @@ OrdererOrgs:
   - Hostname: orderer0
     CommonName: "{{.Hostname}}"
 PeerOrgs:
-- Name: MPBroker
+- Name: MPBrokerOrg
   Domain: mp-broker-org
   Specs:
   - Hostname: mp-broker-peer
     CommonName: "{{.Hostname}}"
-- Name: CustomerA
+- Name: CustomerAOrg
   Domain: customer-a-org
   Specs:
   - Hostname: customer-a-peer
     CommonName: "{{.Hostname}}"
-- Name: CustomerB
+- Name: CustomerBOrg
   Domain: customer-b-org
   Specs:
   - Hostname: customer-b-peer
     CommonName: "{{.Hostname}}"
-- Name: CustomerC
+- Name: CustomerCOrg
   Domain: customer-c-org
   Specs:
   - Hostname: customer-c-peer
