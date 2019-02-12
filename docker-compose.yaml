@@ -37,12 +37,12 @@ services:
     ports:
     - 7054:7054
 
-  mpb-broker-ca:
-    container_name: mpb-broker-ca
+  mp-broker-ca:
+    container_name: mp-broker-ca
     extends:
       file: ./ca-base.yaml
       service: ca-base
-    image: mpb-broker-ca
+    image: mp-broker-ca
     ports:
     - 7054:7054
 
