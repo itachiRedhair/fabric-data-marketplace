@@ -8,7 +8,7 @@ services:
       service: ca-base
     image: customer-a-ca
     ports:
-    - 7054:7054
+      - 7054:7054
 
   customer-b-ca:
     container_name: customer-b-ca
@@ -17,7 +17,7 @@ services:
       service: ca-base
     image: customer-b-ca
     ports:
-    - 8054:7054
+      - 8054:7054
 
   customer-c-ca:
     container_name: customer-c-ca
@@ -26,7 +26,7 @@ services:
       service: ca-base
     image: customer-c-ca
     ports:
-    - 9054:7054
+      - 9054:7054
 
   customer-d-ca:
     container_name: customer-d-ca
@@ -35,7 +35,7 @@ services:
       service: ca-base
     image: customer-d-ca
     ports:
-    - 10054:7054
+      - 10054:7054
 
   mp-broker-ca:
     container_name: mp-broker-ca
@@ -44,27 +44,26 @@ services:
       service: ca-base
     image: mp-broker-ca
     ports:
-    - 11054:7054
-
+      - 11054:7054
 
   orderer:
     container_name: orderer
     image: orderer
     environment:
-    - ORDERER_GENERAL_LOGLEVEL=debug
-    - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-    - ORDERER_GENERAL_GENESISMETHOD=file
-    - ORDERER_GENERAL_GENESISFILE=/orderer/crypto/genesis.block
-    - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
-    - ORDERER_GENERAL_LOCALMSPDIR=/orderer/crypto/msp
-    - ORDERER_GENERAL_TLS_ENABLED=true
-    - ORDERER_GENERAL_TLS_PRIVATEKEY=/orderer/crypto/tls/server.key
-    - ORDERER_GENERAL_TLS_CERTIFICATE=/orderer/crypto/tls/server.crt
-    - ORDERER_GENERAL_TLS_ROOTCAS=[/orderer/crypto/tls/ca.crt]
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/orderer/crypto/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/orderer/crypto/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/orderer/crypto/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/orderer/crypto/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/orderer/crypto/tls/ca.crt]
     working_dir: /orderer
     command: orderer
     ports:
-    - 7050:7050
+      - 7050:7050
 
   customer-a-peer:
     container_name: customer-a-peer
@@ -73,15 +72,15 @@ services:
       service: peer-base
     image: customer-a-peer
     environment:
-    - CORE_PEER_ID=customer-a-peer
-    - CORE_PEER_ADDRESS=customer-a-peer:7051
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-a-peer:7051
-    - CORE_PEER_LOCALMSPID=CustomerAMSP
+      - CORE_PEER_ID=customer-a-peer
+      - CORE_PEER_ADDRESS=customer-a-peer:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-a-peer:7051
+      - CORE_PEER_LOCALMSPID=CustomerAMSP
     ports:
-    - 7051:7051
-    - 7053:7053
+      - 7051:7051
+      - 7053:7053
     depends_on:
-    - orderer
+      - orderer
 
   customer-b-peer:
     container_name: customer-b-peer
@@ -90,15 +89,16 @@ services:
       service: peer-base
     image: customer-b-peer
     environment:
-    - CORE_PEER_ID=customer-b-peer
-    - CORE_PEER_ADDRESS=customer-b-peer:7051
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-b-peer:7051
-    - CORE_PEER_LOCALMSPID=CustomerBMSP
+      - CORE_PEER_ID=customer-b-peer
+      - CORE_PEER_ADDRESS=customer-b-peer:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-b-peer:7051
+      - CORE_PEER_LOCALMSPID=CustomerBMSP
     ports:
-    - 8051:7051
-    - 8053:7053
+      - 8051:7051
+      - 8053:7053
     depends_on:
-    - orderer
+      - orderer
+      - customer-a-peer
 
   customer-c-peer:
     container_name: customer-c-peer
@@ -107,15 +107,17 @@ services:
       service: peer-base
     image: customer-c-peer
     environment:
-    - CORE_PEER_ID=customer-c-peer
-    - CORE_PEER_ADDRESS=customer-c-peer:7051
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-c-peer:7051
-    - CORE_PEER_LOCALMSPID=CustomerCMSP
+      - CORE_PEER_ID=customer-c-peer
+      - CORE_PEER_ADDRESS=customer-c-peer:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-c-peer:7051
+      - CORE_PEER_LOCALMSPID=CustomerCMSP
     ports:
-    - 9051:7051
-    - 9053:7053
+      - 9051:7051
+      - 9053:7053
     depends_on:
-    - orderer
+      - orderer
+      - customer-a-peer
+      - customer-b-peer
 
   customer-d-peer:
     container_name: customer-d-peer
@@ -124,15 +126,18 @@ services:
       service: peer-base
     image: customer-d-peer
     environment:
-    - CORE_PEER_ID=customer-d-peer
-    - CORE_PEER_ADDRESS=customer-d-peer:7051
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-d-peer:7051
-    - CORE_PEER_LOCALMSPID=CustomerDMSP
+      - CORE_PEER_ID=customer-d-peer
+      - CORE_PEER_ADDRESS=customer-d-peer:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=customer-d-peer:7051
+      - CORE_PEER_LOCALMSPID=CustomerDMSP
     ports:
-    - 10051:7051
-    - 10053:7053
+      - 10051:7051
+      - 10053:7053
     depends_on:
-    - orderer
+      - orderer
+      - customer-a-peer
+      - customer-b-peer
+      - customer-c-peer
 
   mp-broker-peer:
     container_name: mp-broker-peer
@@ -141,12 +146,17 @@ services:
       service: peer-base
     image: mp-broker-peer
     environment:
-    - CORE_PEER_ID=mp-broker-peer
-    - CORE_PEER_ADDRESS=mp-broker-peer:7051
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=mp-broker-peer:7051
-    - CORE_PEER_LOCALMSPID=MPBrokerMSP
+      - CORE_PEER_ID=mp-broker-peer
+      - CORE_PEER_ADDRESS=mp-broker-peer:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=mp-broker-peer:7051
+      - CORE_PEER_LOCALMSPID=MPBrokerMSP
     ports:
-    - 11051:7051
-    - 11053:7053
+      - 11051:7051
+      - 11053:7053
     depends_on:
-    - orderer
+      - orderer
+      - customer-a-peer
+      - customer-b-peer
+      - customer-c-peer
+      - customer-d-peer
+
