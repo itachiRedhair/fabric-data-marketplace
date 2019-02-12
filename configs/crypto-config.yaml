@@ -26,7 +26,7 @@ PeerOrgs:
   Specs:
   - Hostname: customer-c-peer
     CommonName: "{{.Hostname}}"
-- Name: CustomerD
+- Name: CustomerDOrg
   Domain: customer-d-org
   Specs:
   - Hostname: customer-d-peer
