@@ -39,7 +39,7 @@ rm -rf $ORDERER/crypto
 mkdir $ORDERER/crypto
 rm -rf $PEERS/{MPBrokerPeer,CustomerAPeer,CustomerBPeer,CustomerCPeer,CustomerDPeer}/crypto
 mkdir $PEERS/{MPBrokerPeer,CustomerAPeer,CustomerBPeer,CustomerCPeer,CustomerDPeer}/crypto
-cp -r $CLIPATH_ORDERERS/orderer-org/orderers/orderer0/{msp,tls} $ORDERER/crypto
+cp -r $CLIPATH_ORDERERS/orderer-org/orderers/orderer/{msp,tls} $ORDERER/crypto
 cp -r $CLIPATH_PEER_ORGANIZATIONS/mp-broker-org/peers/mp-broker-peer/{msp,tls} $PEERS/MPBrokerPeer/crypto
 cp -r $CLIPATH_PEER_ORGANIZATIONS/customer-a-org/peers/customer-a-peer/{msp,tls} $PEERS/CustomerAPeer/crypto
 cp -r $CLIPATH_PEER_ORGANIZATIONS/customer-b-org/peers/customer-b-peer/{msp,tls} $PEERS/CustomerBPeer/crypto

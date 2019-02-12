@@ -42,7 +42,7 @@ Organizations:
 Orderer: &OrdererDefaults
   OrdererType: solo
   Addresses:
-    - orderer0:7050
+    - orderer:7050
   BatchTimeout: 2s
   BatchSize:
     MaxMessageCount: 10
